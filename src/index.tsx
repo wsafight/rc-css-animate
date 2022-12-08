@@ -5,12 +5,13 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
+import { ReactNode } from 'react';
 
 interface AnimateProps {
   tag: any
   clsPrefix?: string
   cls: string
-  children?: React.ReactNode
+  children: ReactNode | null
   initialVisible?: boolean
   onAnimationEnd?: () => void
   getVisibleWhenAnimateEnd?: (cls: string) => boolean
@@ -24,10 +25,15 @@ const Animate = (props: AnimateProps, ref: any) => {
     cls,
     initialVisible,
     onAnimationEnd,
-    getVisibleWhenAnimateEnd
+    getVisibleWhenAnimateEnd,
+    children
   } = props;
 
   const [visible, setVisible ] = useState<boolean>(initialVisible ?? true)
+
+  if (!cls || typeof cls !== 'string') {
+    return <>{children}</>;
+  }
 
   const className = cls.split(' ').map(cls => `${clsPrefix}${cls}`).join(' ')
 
@@ -54,7 +60,7 @@ const Animate = (props: AnimateProps, ref: any) => {
 
 
   if (!visible) {
-    return null
+    return <></>
   }
 
   return createElement(
@@ -64,14 +70,14 @@ const Animate = (props: AnimateProps, ref: any) => {
       onAnimationEnd: handleAnimationEnd,
       className,
     },
-    props.children
+    children
   );
 }
 
-const RAnimat = forwardRef(Animate)
+const RAnimate = forwardRef(Animate)
 
 export {
-  RAnimat
+  RAnimate
 }
 
-export default RAnimat
+export default RAnimate
