@@ -84,5 +84,6 @@ class CompatibleAnimate extends Component<AnimatePropsWithRef, AnimateState> {
   }
 }
 
-
-export default forwardRef((props: any, ref: any) => <CompatibleAnimate forwardedRef={ref} {...props} />)
+export default forwardRef((props: AnimateProps, ref: any) => {
+  return <CompatibleAnimate forwardedRef={ref} {...props} />
+})

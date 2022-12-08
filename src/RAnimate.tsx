@@ -8,7 +8,6 @@ import React, {
 import { AnimateProps } from './types'
 
 const Animate = (props: AnimateProps, ref: any) => {
-
   const {
     tag = 'div',
     clsPrefix = '',
