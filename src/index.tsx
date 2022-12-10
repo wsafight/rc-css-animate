@@ -1,5 +1,5 @@
-import RAnimate from './RAnimate'
-import CompatibleRAnimate from './CompatibleRAnimate'
+import RAnimate from './animate'
+import CompatibleRAnimate from './compatible-animate'
 import { setPrefixCls } from './prefix-cls'
 
 export {
