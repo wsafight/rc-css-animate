@@ -85,8 +85,8 @@ class CompatibleAnimate extends Component<AnimatePropsWithRef, AnimateState> {
         ref: forwardedRef,
         onAnimationEnd: this.handleAnimationEnd,
         className: className.concat(` ${animateClassName}`),
+        style,
       },
-      style,
       children
     )
   }
