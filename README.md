@@ -142,7 +142,7 @@ import { CompatibleRAnimate as ReactCssAnimate } from "rc-css-animate";
 ```
 
 ## 升级日志
-
+- 1.0.1 优化性能，去除不必要的 prefixCls 处理
 - 1.0.0 分离 className 和 animateCls,提供 style 配置
 - 0.0.4 支持全局配置 prefix
 - 0.0.3 基本可用，支持 RAnimate 以及 CompatibleRAnimate 组件

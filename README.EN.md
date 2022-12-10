@@ -140,7 +140,7 @@ import { CompatibleRAnimate as ReactCssAnimate } from "rc-css-animate";
 ```
 
 ## Changelog
-
+- 1.0.1 Optimize performance and eliminate unnecessary prefixCls processing
 - 1.0.0 Separate className and animateCls, provide style configuration
 - 0.0.4 Support global configuration prefix
 - 0.0.3 Basically usable, support RAnimate and CompatibleRAnimate components

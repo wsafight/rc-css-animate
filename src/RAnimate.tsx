@@ -57,7 +57,14 @@ const Animate = (props: AnimateProps, ref: any) => {
   if (typeof className !== 'string') {
     className = ''
   }
-  const animateClassName = animateCls.split(' ').map(item => `${clsPrefix || getPrefixCls()}${item}`).join(' ')
+
+  let animateClassName = animateCls
+
+  const finalClsPrefix = clsPrefix || getPrefixCls()
+
+  if (!finalClsPrefix || typeof finalClsPrefix !== 'string') {
+    animateClassName = animateCls.split(' ').map(item => `${finalClsPrefix}${item}`).join(' ')
+  }
 
   return createElement(
     tag,
