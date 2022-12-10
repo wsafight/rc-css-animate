@@ -23,8 +23,10 @@ yarn install rc-css-animate
 | parameter                | desc                                                                                                                               | type                     | default |
 | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :----------------------- | :------ |
 | tag                      | String (div) or React component                                                                                                    | any                      | div     |
-| clsPrefix                | css animation class prefix                                                                                                         | string                   | -       |
-| cls                      | css animation class （If there is a prefix, the prefix will be added）                                                               | string                   | -       |
+| clsPrefix                | css animation class prefix                                                                                                         | string                   | ''       |
+| animateCls                      | css animation class （If there is a prefix, the prefix will be added）                                                               | string                   | ''      |
+| className | tag component className  | string | '' |
+| style | tag component  style  | CSSProperties ｜ undefined | undefined |
 | childredn                | Subcomponents, no need to pass                                                                                                     | ReactNode                | -       |
 | initialVisible           | Whether to display initially                                                                                                       | boolean                  | true    |
 | onAnimationEnd           | animation end callback                                                                                                             | () => void               | null    |
@@ -43,7 +45,10 @@ function App() {
         tag="div"
         clsPrefix="animate__"
         // current animation
-        cls="animated backInDown infinite"
+        animateCls="animated backInDown infinite"
+        // The className and style of the current tag
+        className=''
+        style={{}}
         initialVisible={false}
         getVisibleWhenAnimateEnd={(cls) => {
           // If there is an Out in the current className
@@ -80,14 +85,15 @@ import "animate.css";
 setPrefixCls("animate__");
 
 function Block(props) {
-  // Don't forget to put className and children
-  const { className, children } = props;
+  // Don't forget to put style, className and children
+  const { className, children, style } = props;
   return (
     <div
       className={className}
       style={{
         background: "red",
         padding: 100,
+        ...style
       }}
     >
       {children}
@@ -102,7 +108,7 @@ function App() {
         tag={Block}
         clsPrefix="animate__"
         // current animation
-        cls="animated backInDown infinite"
+        animateCls="animated backInDown infinite"
         initialVisible={false}
         getVisibleWhenAnimateEnd={(cls) => {
           // If there is an Out in the current className
@@ -135,5 +141,6 @@ import { CompatibleRAnimate as ReactCssAnimate } from "rc-css-animate";
 
 ## Changelog
 
+- 1.0.0 Separate className and animateCls, provide style configuration
 - 0.0.4 Support global configuration prefix
 - 0.0.3 Basically usable, support RAnimate and CompatibleRAnimate components

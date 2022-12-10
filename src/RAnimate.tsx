@@ -12,7 +12,8 @@ const Animate = (props: AnimateProps, ref: any) => {
   const {
     tag = 'div',
     clsPrefix = '',
-    cls,
+    animateCls,
+    style,
     initialVisible,
     onAnimationEnd,
     getVisibleWhenAnimateEnd,
@@ -25,39 +26,46 @@ const Animate = (props: AnimateProps, ref: any) => {
     return null
   }
 
-  if (!cls || typeof cls !== 'string') {
+  if (!animateCls || typeof animateCls !== 'string') {
     return <>{children}</>
   }
-
-  const className = cls.split(' ').map(cls => `${clsPrefix || getPrefixCls()}${cls}`).join(' ')
 
   useEffect(() => {
     if (!getVisibleWhenAnimateEnd) {
       return
     }
-    const visibleWhenAnimateEnd = getVisibleWhenAnimateEnd(cls)
+    const visibleWhenAnimateEnd = getVisibleWhenAnimateEnd(animateCls)
     if (visibleWhenAnimateEnd && !visible) {
       setVisible(true)
     }
-  }, [cls, visible, getVisibleWhenAnimateEnd])
+  }, [animateCls, visible, getVisibleWhenAnimateEnd])
 
   const handleAnimationEnd = useCallback(() => {
     if (!getVisibleWhenAnimateEnd) {
       onAnimationEnd?.()
       return
     }
-    if (visible && !getVisibleWhenAnimateEnd(cls)) {
+    if (visible && !getVisibleWhenAnimateEnd(animateCls)) {
       setVisible(false)
     }
     onAnimationEnd?.()
   }, [getVisibleWhenAnimateEnd])
+
+
+  let { className = '' } = props
+
+  if (typeof className !== 'string') {
+    className = ''
+  }
+  const animateClassName = animateCls.split(' ').map(item => `${clsPrefix || getPrefixCls()}${item}`).join(' ')
 
   return createElement(
     tag,
     {
       ref,
       onAnimationEnd: handleAnimationEnd,
-      className,
+      className: className.concat(` ${animateClassName}`),
+      style,
     },
     children
   )

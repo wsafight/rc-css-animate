@@ -1,9 +1,11 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react'
 
 export interface AnimateProps {
   tag: any
   clsPrefix?: string
-  cls: string
+  className?: string
+  animateCls: string
+  style?: CSSProperties | undefined
   children: ReactNode | null
   initialVisible?: boolean
   onAnimationEnd?: () => void

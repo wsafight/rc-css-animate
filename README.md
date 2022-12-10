@@ -26,8 +26,10 @@ yarn install rc-css-animate
 | 参数                       | 说明                                  | 类型                       | 默认值  |
 | :----------------------- | :---------------------------------- | :----------------------- | :--- |
 | tag                      | 字符串（div）或者 React 组件                 | any                      | div  |
-| clsPrefix                | css 动画 class 前缀                     | string                   | -    |
-| cls                      | css 动画 class（有前缀会添加前缀）              | string                   | -    |
+| clsPrefix                | css 动画 class 前缀                     | string                   | ''   |
+| animateCls                      | css 动画 class（有前缀会添加前缀）              | string                   | ''   |
+| className | tag 组件 className  | string | '' |
+| style | tag 组件 style  | CSSProperties ｜ undefined | undefined |
 | childredn                | 子组件，无需特意传递                          | ReactNode                | -    |
 | initialVisible           | 初始是否展现                              | boolean                  | true |
 | onAnimationEnd           | 动画结束回调                              | () => void               | null |
@@ -45,8 +47,11 @@ function App() {
       <ReactCssAnimate
         tag="div"
         clsPrefix="animate__"
+        // 当前 tag 的 className 和 style
+        className=''
+        style={{}}
         // 当前动画
-        cls="animated backInDown infinite"
+        animateCls="animated backInDown infinite"
         initialVisible={false}
         getVisibleWhenAnimateEnd={(cls) => {
           // 如果当前 className 中有 Out
@@ -83,14 +88,15 @@ import "animate.css";
 setPrefixCls("animate__");
 
 function Block(props) {
-  // 别忘记放入 className 和 children
-  const { className, children } = props;
+  // 别忘记放入 style、 className 和 children
+  const { className, children, style } = props;
   return (
     <div
       className={className}
       style={{
         background: "red",
         padding: 100,
+        ...style
       }}
     >
       {children}
@@ -104,7 +110,7 @@ function App() {
       <ReactCssAnimate
         tag={Block}
         // 当前动画
-        cls="animated backInDown infinite"
+        animateCls="animated backInDown infinite"
         initialVisible={false}
         getVisibleWhenAnimateEnd={(cls) => {
           // 如果当前 className 中有 Out
@@ -137,5 +143,6 @@ import { CompatibleRAnimate as ReactCssAnimate } from "rc-css-animate";
 
 ## 升级日志
 
+- 1.0.0 分离 className 和 animateCls,提供 style 配置
 - 0.0.4 支持全局配置 prefix
 - 0.0.3 基本可用，支持 RAnimate 以及 CompatibleRAnimate 组件

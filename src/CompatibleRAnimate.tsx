@@ -23,12 +23,12 @@ class CompatibleAnimate extends Component<AnimatePropsWithRef, AnimateState> {
   }
 
   static getDerivedStateFromProps(props: AnimateProps, state: AnimateState) {
-    const { getVisibleWhenAnimateEnd, cls } = props
+    const { getVisibleWhenAnimateEnd, animateCls } = props
     const { visible } = state
     if (!getVisibleWhenAnimateEnd) {
       return null
     }
-    const visibleWhenAnimateEnd = getVisibleWhenAnimateEnd(cls)
+    const visibleWhenAnimateEnd = getVisibleWhenAnimateEnd(animateCls)
     if (!visibleWhenAnimateEnd) {
       return null
     }
@@ -39,13 +39,13 @@ class CompatibleAnimate extends Component<AnimatePropsWithRef, AnimateState> {
   }
 
   handleAnimationEnd = () => {
-    const { getVisibleWhenAnimateEnd, onAnimationEnd, cls } = this.props
+    const { getVisibleWhenAnimateEnd, onAnimationEnd, animateCls } = this.props
     const { visible } = this.state
     if (!getVisibleWhenAnimateEnd) {
       onAnimationEnd?.()
       return
     }
-    if (visible && !getVisibleWhenAnimateEnd(cls)) {
+    if (visible && !getVisibleWhenAnimateEnd(animateCls)) {
       this.setState({ visible: false })
     }
     onAnimationEnd?.()
@@ -54,32 +54,39 @@ class CompatibleAnimate extends Component<AnimatePropsWithRef, AnimateState> {
   render(): React.ReactNode {
     const {
       tag = 'div',
-      cls,
+      animateCls = '',
       children,
       clsPrefix,
-      forwardedRef
+      forwardedRef,
+      style,
     } = this.props
 
-    console.log('wsa-test')
-
-    if (!cls || typeof cls !== 'string') {
+    if (!animateCls || typeof animateCls !== 'string') {
       return <>{children}</>
     }
 
     const { visible } = this.state
+
     if (!visible) {
       return null
     }
 
-    const className = cls.split(' ').map(cls => `${clsPrefix || getPrefixCls()}${cls}`).join(' ')
+    let { className = '' } = this.props
+
+    if (typeof className !== 'string') {
+      className = ''
+    }
+
+    const animateClassName = animateCls.split(' ').map(item => `${clsPrefix || getPrefixCls()}${item}`).join(' ')
 
     return createElement(
       tag,
       {
         ref: forwardedRef,
         onAnimationEnd: this.handleAnimationEnd,
-        className,
+        className: className.concat(` ${animateClassName}`),
       },
+      style,
       children
     )
   }
