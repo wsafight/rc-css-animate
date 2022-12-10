@@ -28,13 +28,13 @@ yarn install rc-css-animate
 | tag                      | 字符串（div）或者 React 组件                 | any                      | div  |
 | clsPrefix                | css 动画 class 前缀                     | string                   | -    |
 | cls                      | css 动画 class（有前缀会添加前缀）              | string                   | -    |
-| childredn                | 子组件，无需特意传递                     | ReactNode                | -    |
+| childredn                | 子组件，无需特意传递                          | ReactNode                | -    |
 | initialVisible           | 初始是否展现                              | boolean                  | true |
 | onAnimationEnd           | 动画结束回调                              | () => void               | null |
 | getVisibleWhenAnimateEnd | 获取动画结束后组件是否展现函数，如果返回 false，则不会显示该组件 | (cls: string) => boolean | null |
 
 ```tsx
-import React, { createRef, useEffect } from "react";
+import React from "react";
 import ReactCssAnimate from "rc-css-animate";
 // 引入 animate.css 辅助动画
 import "animate.css";
@@ -43,13 +43,13 @@ function App() {
   return (
     <div className="App">
       <ReactCssAnimate
-        tag='div'
+        tag="div"
         clsPrefix="animate__"
         // 当前动画
         cls="animated backInDown infinite"
         initialVisible={false}
         getVisibleWhenAnimateEnd={(cls) => {
-          // 如果当前 className 中有 Out 
+          // 如果当前 className 中有 Out
           // 返回 false 则会在动画结束后不再显示
           if (cls.includes("Out")) {
             return false;
@@ -72,9 +72,16 @@ function App() {
 export default App;
 ```
 
-使用自己定义的组件传入
+使用自己定义的组件传入以及设置全局 prefix
 
 ```tsx
+import React from "react";
+import ReactCssAnimate, { setPrefixCls } from "rc-css-animate";
+import "animate.css";
+
+// 设置全局 prefix,会被当前组件覆盖
+setPrefixCls("animate__");
+
 function Block(props) {
   // 别忘记放入 className 和 children
   const { className, children } = props;
@@ -96,12 +103,11 @@ function App() {
     <div className="App">
       <ReactCssAnimate
         tag={Block}
-        clsPrefix="animate__"
         // 当前动画
         cls="animated backInDown infinite"
         initialVisible={false}
         getVisibleWhenAnimateEnd={(cls) => {
-          // 如果当前 className 中有 Out 
+          // 如果当前 className 中有 Out
           // 返回 false 则会在动画结束后不再显示
           if (cls.includes("Out")) {
             return false;
@@ -126,5 +132,10 @@ function App() {
 
 ```ts
 // 导入兼容的组件
-import { CompatibleRAnimate as ReactCssAnimate } from 'rc-css-animate'
+import { CompatibleRAnimate as ReactCssAnimate } from "rc-css-animate";
 ```
+
+## 升级日志
+
+- 0.0.4 支持全局配置 prefix
+- 0.0.3 基本可用，支持 RAnimate 以及 CompatibleRAnimate 组件

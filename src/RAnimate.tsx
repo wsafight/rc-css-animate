@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useCallback,
 } from 'react'
+import { getPrefixCls } from './prefix-cls'
 import { AnimateProps } from './types'
 
 const Animate = (props: AnimateProps, ref: any) => {
@@ -28,7 +29,7 @@ const Animate = (props: AnimateProps, ref: any) => {
     return <>{children}</>
   }
 
-  const className = cls.split(' ').map(cls => `${clsPrefix}${cls}`).join(' ')
+  const className = cls.split(' ').map(cls => `${clsPrefix || getPrefixCls()}${cls}`).join(' ')
 
   useEffect(() => {
     if (!getVisibleWhenAnimateEnd) {

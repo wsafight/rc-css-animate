@@ -3,6 +3,7 @@ import React, {
   forwardRef,
   Component,
 } from 'react'
+import { getPrefixCls } from './prefix-cls'
 import { AnimateProps } from './types'
 
 interface AnimatePropsWithRef extends AnimateProps {
@@ -70,7 +71,7 @@ class CompatibleAnimate extends Component<AnimatePropsWithRef, AnimateState> {
       return null
     }
 
-    const className = cls.split(' ').map(cls => `${clsPrefix}${cls}`).join(' ')
+    const className = cls.split(' ').map(cls => `${clsPrefix || getPrefixCls()}${cls}`).join(' ')
 
     return createElement(
       tag,

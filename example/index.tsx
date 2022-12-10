@@ -1,8 +1,10 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { RAnimate, CompatibleRAnimate } from '../.';
+import { RAnimate, setPrefixCls } from '../.';
 import 'animate.css'
+
+setPrefixCls('animate__')
 
 const App = () => {
   return (
@@ -10,10 +12,9 @@ const App = () => {
       db
       <RAnimate 
         tag='div' 
-        clsPrefix='animate__'
         cls='animated bounce infinite'
         // cls='animated backInDown'
-        initialVisible={false}
+        initialVisible={true}
         getVisibleWhenAnimateEnd={(cls: string) => {
           if (cls.includes('Out')) {
             return false
@@ -26,24 +27,7 @@ const App = () => {
         }}>
           测试动画
         </div>
-      
       </RAnimate>
-
-      <CompatibleRAnimate
-        tag='div' 
-        clsPrefix='animate__'
-        cls='animated bounce infinite'
-        // cls='animated backInDown'
-        initialVisible={false}
-        getVisibleWhenAnimateEnd={(cls: string) => {
-          if (cls.includes('Out')) {
-            return false
-          }
-          return true;
-        }}
-      >
-        123123      
-      </CompatibleRAnimate>
     </div>
   );
 };
