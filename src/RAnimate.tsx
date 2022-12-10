@@ -25,7 +25,7 @@ const Animate = (props: AnimateProps, ref: any) => {
   }
 
   if (!cls || typeof cls !== 'string') {
-    return <>{children} </>
+    return <>{children}</>
   }
 
   const className = cls.split(' ').map(cls => `${clsPrefix}${cls}`).join(' ')
